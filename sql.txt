@@ -1,0 +1,469 @@
+SQL> create table employee_master(employee_id number(5) primary key,
+  2  employee_name varchar2(50),
+  3  password varchar2(20),
+  4  role varchar2(20));
+
+Table created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> desc employee_master;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+
+ EMPLOYEE_ID                               NOT NULL NUMBER(5)
+ EMPLOYEE_NAME                                      VARCHAR2(50)
+ PASSWORD                                           VARCHAR2(20)
+ ROLE                                               VARCHAR2(20)
+
+SQL> create table course_master(course_id number(5) primary key,
+  2  course_name varchar2(50),
+  3  no_of_days number(5));
+
+Table created.
+
+SQL> desc course_master;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+
+ COURSE_ID                                 NOT NULL NUMBER(5)
+ COURSE_NAME                                        VARCHAR2(50)
+ NO_OF_DAYS                                         NUMBER(5)
+
+SQL> commit;
+
+Commit complete.
+
+SQL> create table training_program(training_code number(5) primary key,
+  2  course_code number(5),
+  3  faculty_code number(5),
+  4  start_date date,
+  5  end_date date,
+  6  foreign key(course_code) references course_master(course_id),
+  7  foreign key(faculty_code) references employee_master(employee_id));
+
+Table created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> desc training_program;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- --------------------------
+
+ TRAINING_CODE                             NOT NULL NUMBER(5)
+ COURSE_CODE                                        NUMBER(5)
+ FACULTY_CODE                                       NUMBER(5)
+ START_DATE                                         DATE
+ END_DATE                                           DATE
+
+SQL> create table faculty_skill(faculty_id number(5),
+  2  skill_set varchar2(200),
+  3  foreign key(faculty_id) references employee_master(employee_id));
+
+Table created.
+
+SQL> desc faculty_skill;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ---------------------------
+
+ FACULTY_ID                                         NUMBER(5)
+ SKILL_SET                                          VARCHAR2(200)
+ 
+SQL> create table training_partici_enroll(training_code number(5),
+  2  participant_id number(5),
+  3  foreign key(training_code) references training_program(training_code),
+  4  foreign key(participant_id) references employee_master(employee_id));
+
+Table created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> create table feedback_master(training_code number(5),
+  2  participant_id number(5),
+  3  fb_prs_comm number(1),
+  4  fb_clrfy_dbts number(1),
+  5  fb_tm number(1),
+  6  fb_hnd_out number(1),
+  7  fb_hw_sw_ntwrk number(1),
+  8  comments varchar2(200),
+  9  suggestions varchar2(200),
+ 10  foreign key(training_code) references training_program(training_code),
+ 11  foreign key(participant_id) references employee_master(employee_id));
+
+Table created.
+
+SQL> desc feedback_master;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+
+ TRAINING_CODE                                      NUMBER(5)
+ PARTICIPANT_ID                                     NUMBER(5)
+ FB_PRS_COMM                                        NUMBER(1)
+ FB_CLRFY_DBTS                                      NUMBER(1)
+ FB_TM                                              NUMBER(1)
+ FB_HND_OUT                                         NUMBER(1)
+ FB_HW_SW_NTWRK                                     NUMBER(1)
+ COMMENTS                                           VARCHAR2(200)
+ SUGGESTIONS                                        VARCHAR2(200)
+
+SQL> commit;
+
+Commit complete.
+
+SQL> create sequence training_code_sequence
+  2  start with 100
+  3  increment by 1
+  4  nocache
+  5  nocycle;
+
+Sequence created.
+
+Commit complete.
+
+SQL> create sequence course_id_sequence
+  2  start with 1000
+  3  increment by 1
+  4  nocache
+  5  nocycle;
+
+Sequence created.
+
+SQL> commit;
+
+Commit complete.
+
+
+SQL> insert into employee_master values(10001,'Shubham Singh','admin','Admin');
+
+1 row created.
+
+SQL> insert into employee_master values(10002,'Ajay','ajay123','Cordinator');
+
+1 row created.
+
+SQL> insert into employee_master values(10003,'Sanjay Sinha','sanjay123','Facult
+y');
+
+1 row created.
+
+SQL> insert into employee_master values(10004,'Ch.Sekhar','sekhar123','Faculty')
+;
+
+1 row created.
+
+SQL> insert into employee_master values(10005,'Bharath Chandra','bharath123','Us
+er');
+
+1 row created.
+
+SQL> insert into employee_master values(10006,'James Bond','james123','User');
+
+1 row created.
+
+SQL> select * from employee_master;
+
+EMPLOYEE_ID EMPLOYEE_NAME
+----------- --------------------------------------------------
+PASSWORD             ROLE
+-------------------- --------------------
+      10001 Shubham Singh
+admin                Admin
+
+      10002 Ajay
+ajay123              Cordinator
+
+      10003 Sanjay Sinha
+sanjay123            Faculty
+
+
+EMPLOYEE_ID EMPLOYEE_NAME
+----------- --------------------------------------------------
+PASSWORD             ROLE
+-------------------- --------------------
+      10004 Ch.Sekhar
+sekhar123            Faculty
+
+      10005 Bharath Chandra
+bharath123           User
+
+      10006 James Bond
+james123             User
+
+
+6 rows selected.
+
+SQL>
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+
+SQL> desc employee_master;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+
+ EMPLOYEE_ID                               NOT NULL NUMBER(5)
+ EMPLOYEE_NAME                                      VARCHAR2(50)
+ PASSWORD                                           VARCHAR2(20)
+ ROLE                                               VARCHAR2(20)
+
+SQL> select * from employee_master;
+
+EMPLOYEE_ID EMPLOYEE_NAME
+----------- --------------------------------------------------
+PASSWORD             ROLE
+-------------------- --------------------
+      10001 Shubham Singh
+admin                Admin
+
+      10002 Ajay
+ajay123              Cordinator
+
+      10003 Sanjay Sinha
+sanjay123            Faculty
+
+
+EMPLOYEE_ID EMPLOYEE_NAME
+----------- --------------------------------------------------
+PASSWORD             ROLE
+-------------------- --------------------
+      10004 Ch.Sekhar
+sekhar123            Faculty
+
+      10005 Bharath Chandra
+bharath123           User
+
+      10006 James Bond
+james123             User
+
+
+6 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from training_program;
+
+no rows selected
+
+SQL> select * from course_master;
+
+no rows selected
+
+SQL> insert into faculty_skill values(10003,'Java,Networking');
+
+1 row created.
+
+SQL> desc employee_master;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+
+ EMPLOYEE_ID                               NOT NULL NUMBER(5)
+ EMPLOYEE_NAME                                      VARCHAR2(50)
+ PASSWORD                                           VARCHAR2(20)
+ ROLE                                               VARCHAR2(20)
+
+SQL> commit;
+
+Commit complete.
+
+SQL> insert into faculty_skill values(10004,'Web Technologies,SQL');
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> insert into faculty_skill values(10004,'Web Technologies,SQL');
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from faculty_skill;
+
+FACULTY_ID
+----------
+SKILL_SET
+--------------------------------------------------------------------------------
+
+     10003
+Java,Networking
+
+     10004
+Web Technologies,SQL
+
+     10004
+Web Technologies,SQL
+
+
+SQL> delete from faculty_skill;
+
+3 rows deleted.
+
+SQL> insert into faculty_skill values(10003,'Java,Networking');
+
+1 row created.
+
+SQL> insert into faculty_skill values(10004,'Web Technologies,SQL');
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from faculty_skill;
+
+FACULTY_ID
+----------
+SKILL_SET
+--------------------------------------------------------------------------------
+
+     10003
+Java,Networking
+
+     10004
+Web Technologies,SQL
+
+
+SQL> commit;
+
+Commit complete.
+
+SQL> desc faculty_skill;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+
+ FACULTY_ID                                         NUMBER(5)
+ SKILL_SET                                          VARCHAR2(200)
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from faculty_skill;
+
+FACULTY_ID
+----------
+SKILL_SET
+--------------------------------------------------------------------------------
+
+     10003
+Java,Networking
+
+     10004
+Web Technologies,SQL
+
+
+SQL> select * from faculty_skill;
+
+FACULTY_ID
+----------
+SKILL_SET
+--------------------------------------------------------------------------------
+
+     10003
+Java,Networking
+
+     10004
+Web Technologies,SQL
+
+
+SQL> select * from faculty_skill;
+
+FACULTY_ID
+----------
+SKILL_SET
+--------------------------------------------------------------------------------
+
+     10003
+C,C++,JAVA
+
+     10004
+Web Technologies,SQL
+
+
+SQL> select * from faculty_skill;
+
+FACULTY_ID
+----------
+SKILL_SET
+--------------------------------------------------------------------------------
+
+     10003
+C,C++,JAVA
+
+     10004
+Web Technologies,SQL
+
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from faculty_skill;
+
+FACULTY_ID
+----------
+SKILL_SET
+--------------------------------------------------------------------------------
+
+     10003
+C,C++,JAVA
+
+     10004
+Web Technologies,SQL
+
+
+SQL> select * from faculty_skill;
+
+FACULTY_ID
+----------
+SKILL_SET
+--------------------------------------------------------------------------------
+
+     10003
+JAVA,IoT,Cloud
+
+     10004
+Web Technologies,SQL
+
+
+SQL> select * from faculty_skill;
+
+FACULTY_ID
+----------
+SKILL_SET
+--------------------------------------------------------------------------------
+
+     10004
+MySQL,PHP
+
+
+SQL> insert into faculty_skill values(10003,'Java,Networking');
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL>
