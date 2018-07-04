@@ -24,6 +24,19 @@ SQL> create table course_master(course_id number(5) primary key,
 
 Table created.
 
+SQL> alter table course_master modify (course_name NOT NULL);
+
+Table altered.
+
+SQL> desc course_master;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ COURSE_ID                                 NOT NULL NUMBER(5)
+ COURSE_NAME                               NOT NULL VARCHAR2(50)
+ NO_OF_DAYS                                         NUMBER(5)
+
+SQL> commit;
+
 SQL> desc course_master;
  Name                                      Null?    Type
  ----------------------------------------- -------- ----------------------------
@@ -127,10 +140,10 @@ Sequence created.
 Commit complete.
 
 SQL> create sequence course_id_sequence
-  2  start with 1000
-  3  increment by 1
-  4  nocache
-  5  nocycle;
+    start with 1000
+    increment by 1
+    nocache
+    nocycle;
 
 Sequence created.
 
@@ -139,32 +152,26 @@ SQL> commit;
 Commit complete.
 
 
-SQL> insert into employee_master values(10001,'Shubham Singh','admin','Admin');
+ insert into employee_master values(10001,'Shubham Singh','admin','Admin');
 
-1 row created.
 
-SQL> insert into employee_master values(10002,'Ajay','ajay123','Cordinator');
+ insert into employee_master values(10002,'Ajay','ajay123','Cordinator');
 
-1 row created.
 
-SQL> insert into employee_master values(10003,'Sanjay Sinha','sanjay123','Facult
+ insert into employee_master values(10003,'Sanjay Sinha','sanjay123','Facult
 y');
 
-1 row created.
 
-SQL> insert into employee_master values(10004,'Ch.Sekhar','sekhar123','Faculty')
+insert into employee_master values(10004,'Ch.Sekhar','sekhar123','Faculty')
 ;
 
-1 row created.
 
-SQL> insert into employee_master values(10005,'Bharath Chandra','bharath123','Us
+ insert into employee_master values(10005,'Bharath Chandra','bharath123','Us
 er');
 
-1 row created.
 
-SQL> insert into employee_master values(10006,'James Bond','james123','User');
+ insert into employee_master values(10006,'James Bond','james123','User');
 
-1 row created.
 
 SQL> select * from employee_master;
 
